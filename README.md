@@ -7,3 +7,26 @@
 * please-write-student1-name (please-write-email-address)  
 * please-write-student2-name (please-write-email-address) or remove  
 * please-write-student3-name (please-write-email-address) or remove  
+
+**Building**
+
+Run ant command, it will generate source files in bin folder.
+```console
+ant
+``` 
+**Running**
+
+Go to bin folder.
+```console
+cd bin
+``` 
+Create folder named files. Add some files to share there.
+
+Start peer client app.
+```console
+java src.peer.Client
+``` 
+Start central indexing server app.
+```console
+java src.cis.Server
+``` 
