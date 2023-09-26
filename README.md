@@ -31,11 +31,15 @@ Start central indexing server app.
 java src.cis.CisMain
 ``` 
 
-```
-
 <img width="1136" alt="Screenshot 2023-09-26 at 3 49 51 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/fcdf2283-748d-4ebe-a4d2-796b64e738be">
 
-``````
+
+**Registration:**
+<img width="1139" alt="Screenshot 2023-09-26 at 4 55 04 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/bcd1411d-8493-4ae6-99ef-6b8093c976a8">
+
+
 
 To run files-generator.py, 
 Execute `python files-generator.py <peerID>`, eg. `python files-generater.py peer1`
+
+
