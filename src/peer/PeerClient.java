@@ -100,6 +100,10 @@ public class PeerClient extends Thread {
     }
 
     private void search() throws UnknownHostException, IOException {
+
+         // record start time    
+        long startTime = System.nanoTime();
+
         System.out.print("[Client]: File name:");
         String fileName = input.nextLine();
         if (fileName == null || fileName == "") {
@@ -129,9 +133,22 @@ public class PeerClient extends Thread {
             this.peers.add(msg);
             msg = in.readUTF();
         }
+        
+         // record end time
+         long endTime = System.nanoTime();
+
+         // calculating the time in milliseconds
+         long elapsedTimeMillis = (endTime - startTime) / 1000000; 
+
+         System.out.println("Time Taken: " + elapsedTimeMillis + "ms");
+    
     }
 
     private void obtain() throws UnknownHostException, IOException {
+
+         // record start time    
+        long startTime = System.nanoTime();
+
 
         if (this.fileToObtain == "") {
             System.out.println("[Client]: Please search a file first!");
@@ -167,5 +184,13 @@ public class PeerClient extends Thread {
                 fos.write(buffer, 0, bytesRead);
             }
         }
+          // record end time
+         long endTime = System.nanoTime();
+
+         // calculating the time in milliseconds
+         long elapsedTimeMillis = (endTime - startTime) / 1000000; 
+
+         System.out.println("Time Taken: " + elapsedTimeMillis + "ms");
+    
     }
 }
