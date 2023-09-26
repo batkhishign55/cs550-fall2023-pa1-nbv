@@ -29,4 +29,8 @@ java src.peer.PeerMain
 Start central indexing server app.
 ```console
 java src.cis.CisMain
-``` 
+```
+
+<img width="1136" alt="Screenshot 2023-09-26 at 3 49 51 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/fcdf2283-748d-4ebe-a4d2-796b64e738be">
+
+
