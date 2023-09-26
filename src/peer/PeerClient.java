@@ -16,8 +16,13 @@ public class PeerClient extends Thread {
     private DataOutputStream out = null;
     private DataInputStream in = null;
     private Scanner input = null;
-    ArrayList<String> peers = new ArrayList<>();
-    String fileToObtain = "";
+    private ArrayList<String> peers = new ArrayList<>();
+    private String fileToObtain = "";
+    private String cisAddress = "";
+
+    public PeerClient(String cisAddress) {
+        this.cisAddress = cisAddress;
+    }
 
     @Override
     public void run() {
@@ -40,7 +45,7 @@ public class PeerClient extends Thread {
                     try {
                         search();
                     } catch (IOException e) {
-                        System.out.println("[Client]: Encountered an error while downloading!");
+                        System.out.println("[Client]: Encountered an error while searching!");
                         e.printStackTrace();
                     }
                     break;
@@ -48,7 +53,7 @@ public class PeerClient extends Thread {
                     try {
                         obtain();
                     } catch (IOException e) {
-                        System.out.println("[Client]: Encountered an error while downloading!");
+                        System.out.println("[Client]: Encountered an error while obtaining!");
                         e.printStackTrace();
                     }
                     break;
@@ -66,7 +71,7 @@ public class PeerClient extends Thread {
         File[] listOfFiles = folder.listFiles();
 
         // establish a connection
-        socket = new Socket("127.0.0.1", 8080);
+        socket = new Socket(cisAddress, 8080);
         System.out.println("[Client]: Connected!");
 
         // sends output to the socket
@@ -101,7 +106,7 @@ public class PeerClient extends Thread {
 
     private void search() throws UnknownHostException, IOException {
 
-         // record start time    
+        // record start time
         long startTime = System.nanoTime();
 
         System.out.print("[Client]: File name:");
@@ -111,7 +116,7 @@ public class PeerClient extends Thread {
         }
 
         // establish a connection
-        socket = new Socket("127.0.0.1", 8080);
+        socket = new Socket(cisAddress, 8080);
         System.out.println("[Client]: Connected!");
 
         DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -133,41 +138,56 @@ public class PeerClient extends Thread {
             this.peers.add(msg);
             msg = in.readUTF();
         }
-        
-         // record end time
-         long endTime = System.nanoTime();
 
-         // calculating the time in milliseconds
-         long elapsedTimeMillis = (endTime - startTime) / 1000000; 
+        // record end time
+        long endTime = System.nanoTime();
 
-         System.out.println("Time Taken: " + elapsedTimeMillis + "ms");
-    
+        // calculating the time in milliseconds
+        long elapsedTimeMillis = (endTime - startTime) / 1000000;
+
+        System.out.println("Time Taken: " + elapsedTimeMillis + "ms");
+
     }
 
     private void obtain() throws UnknownHostException, IOException {
 
-         // record start time    
+        // record start time
         long startTime = System.nanoTime();
-
 
         if (this.fileToObtain == "") {
             System.out.println("[Client]: Please search a file first!");
             return;
         }
+
+        String peer = "";
         if (peers.size() == 0) {
             System.out.println("[Client]: Your requested file is not found!");
             return;
+        } else if (peers.size() == 1) {
+            peer = peers.get(0);
+        } else {
+            for (String speer : this.peers) {
+                System.out.println(String.format("[Client]: %s", speer));
+            }
+            System.out.print("[Client]: Choose a server from above: ");
+            String peerAddr = input.nextLine();
+
+            for (String speer : this.peers) {
+                System.out.println(speer.split("\\s+")[0]);
+                if (speer.split("\\s+")[0].equals(peerAddr)) {
+                    peer = speer;
+                }
+            }
         }
-        int idx = 0;
-        for (String peer : this.peers) {
-            System.out.println(String.format("[Client]: [%d]: %s", idx, peer));
-            idx += 1;
+
+        System.out.println(peer);
+
+        if (peer == "") {
+            System.out.print("[Client]: Invalid option!");
         }
-        System.out.print("[Client]: Choose a server from above: ");
-        String serverIdx = input.nextLine();
 
         // establish a connection
-        String[] splited = peers.get(Integer.parseInt(serverIdx)).split("\\s+");
+        String[] splited = peer.split("\\s+");
         socket = new Socket(splited[1], 6000);
         System.out.println("[Client]: Connected!");
 
@@ -184,13 +204,13 @@ public class PeerClient extends Thread {
                 fos.write(buffer, 0, bytesRead);
             }
         }
-          // record end time
-         long endTime = System.nanoTime();
+        // record end time
+        long endTime = System.nanoTime();
 
-         // calculating the time in milliseconds
-         long elapsedTimeMillis = (endTime - startTime) / 1000000; 
+        // calculating the time in milliseconds
+        long elapsedTimeMillis = (endTime - startTime) / 1000000;
 
-         System.out.println("Time Taken: " + elapsedTimeMillis + "ms");
-    
+        System.out.println("Time Taken: " + elapsedTimeMillis + "ms");
+
     }
 }

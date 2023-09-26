@@ -2,5 +2,6 @@
     <target name="compile">
         <mkdir dir="bin"/>
         <javac srcdir="src" destdir="bin"/>
+        <copy file="app.config" todir="bin"/>
     </target>
 </project>

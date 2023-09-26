@@ -34,7 +34,6 @@ public class PeerServer extends Thread {
                 System.out.println(String.format("[Server]: Requested file name: %s", fileName));
 
                 byte[] bytes = Files.readAllBytes(Paths.get("./files/", fileName));
-                System.out.println(bytes.toString());
 
                 out.flush();
                 out.write(bytes);
