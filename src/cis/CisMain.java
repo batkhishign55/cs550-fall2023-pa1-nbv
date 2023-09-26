@@ -43,9 +43,9 @@ public class CisMain {
 				DataInputStream in = new DataInputStream(socket.getInputStream());
 				DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-				Thread myThread = new ClientHandler(this, socket, in, out);
+				Thread clientThread = new ClientHandler(this, socket, in, out);
 				// starting
-				myThread.start();
+				clientThread.start();
 
 			} catch (IOException i) {
 				System.out.println(i);
