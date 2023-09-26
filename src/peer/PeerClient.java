@@ -73,10 +73,14 @@ public class PeerClient extends Thread {
         in = new DataInputStream(socket.getInputStream());
         out = new DataOutputStream(socket.getOutputStream());
 
+        // ask peer id
+        System.out.print("[Client]: Peer ID:");
+        String peerId = input.nextLine();
+
         // send request type
         out.writeUTF("register");
         // send client id
-        out.writeUTF("0");
+        out.writeUTF(peerId);
 
         // send file names to master
         for (File file : listOfFiles) {
@@ -115,11 +119,12 @@ public class PeerClient extends Thread {
 
         ArrayList<String> peers = new ArrayList<>();
         String msg = in.readUTF();
-        // reads peers from client until "end" is sent
+        // reads peers from cis until "end" is sent
         int idx = 0;
         while (!msg.equals("end")) {
             peers.add(msg);
             System.out.println(String.format("[Client]: [%d]: %s", idx, msg));
+            String[] splited = msg.split("\\s+");
             msg = in.readUTF();
         }
     }
