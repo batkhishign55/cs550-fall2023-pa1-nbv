@@ -1,7 +1,7 @@
 package src.cis;
 import java.util.ArrayList;
 
-class PeerClientEntity {
+public class PeerClientEntity {
 
     private final String peerId;
     private String hostname;

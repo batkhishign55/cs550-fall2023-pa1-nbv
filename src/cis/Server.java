@@ -7,10 +7,21 @@ import java.io.*;
 
 public class Server {
 	// initialize socket and input stream
-	private Socket socket = null;
 	private ServerSocket server = null;
-	private DataInputStream in = null;
 	ArrayList<PeerClientEntity> peers = new ArrayList<>();
+	public static final Object lock = new Object();
+
+	public ArrayList<PeerClientEntity> getPeers() {
+		synchronized (lock) {
+			return this.peers;
+		}
+	}
+
+	public void setPeers(ArrayList<PeerClientEntity> peers) {
+		synchronized (lock) {
+			this.peers = peers;
+		}
+	}
 
 	// constructor with port
 	public Server(int port) {
@@ -27,69 +38,16 @@ public class Server {
 			try {
 
 				System.out.println("Waiting for a client ...");
-				socket = server.accept();
+				Socket socket = server.accept();
 				System.out.println("Client accepted");
-				System.out.println(socket.getInetAddress().getHostName());
 
-				// takes input from the client socket
-				in = new DataInputStream(
-						new BufferedInputStream(socket.getInputStream()));
+				DataInputStream in = new DataInputStream(socket.getInputStream());
+				DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-				// first message is client id
-				String id = in.readUTF();
+				Thread myThread = new ClientHandler(this, socket, in, out);
+				// starting
+				myThread.start();
 
-				PeerClientEntity peer = null;
-
-				// check if peer is already saved
-				for (PeerClientEntity savedPeer : peers) {
-					if (savedPeer.getPeerId().equals(id)) {
-						peer = savedPeer;
-						peers.remove(peer);
-						break;
-					}
-				}
-
-				// if peer is not found, register new one
-				if (peer == null) {
-					peer = new PeerClientEntity(id);
-					peer.setHostname(socket.getInetAddress().getHostName());
-
-					ArrayList<String> fileNames = new ArrayList<>();
-					String fileName = "";
-					// reads file names from client until "end" is sent
-					while (!fileName.equals("end")) {
-						fileName = in.readUTF();
-						fileNames.add(fileName);
-						System.out.println(fileName);
-					}
-					peer.setFileNames(fileNames);
-
-					peers.add(peer);
-					System.out.println("Registered new peer and files!");
-				}
-				// if peer is found, update file names
-				else {
-					peer.setHostname(socket.getInetAddress().getHostName());
-
-					ArrayList<String> fileNames = peer.getFileNames();
-					String fileName = "";
-					// reads file names from client until "end" is sent
-					while (!fileName.equals("end")) {
-						fileName = in.readUTF();
-						if (!fileNames.contains(fileName)) {
-							fileNames.add(fileName);
-							System.out.println(fileName);
-						}
-					}
-					peers.add(peer);
-					System.out.println("Updated peer files!");
-				}
-
-				System.out.println("Closing connection");
-
-				// close connection
-				socket.close();
-				in.close();
 			} catch (IOException i) {
 				System.out.println(i);
 			}

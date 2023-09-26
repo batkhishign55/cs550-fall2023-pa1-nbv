@@ -3,6 +3,7 @@ package src.peer;
 // A Java program for a Client
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Client {
@@ -10,6 +11,7 @@ public class Client {
     private Socket socket = null;
     private Scanner input = null;
     private DataOutputStream out = null;
+    private DataInputStream in = null;
 
     public Client() {
         System.out.println("Client started");
@@ -23,6 +25,14 @@ public class Client {
                         register();
                     } catch (IOException e) {
                         System.out.println("Encountered an error while registering!");
+                        e.printStackTrace();
+                    }
+                    break;
+                case "1":
+                    try {
+                        download();
+                    } catch (IOException e) {
+                        System.out.println("Encountered an error while downloading!");
                         e.printStackTrace();
                     }
                     break;
@@ -40,13 +50,17 @@ public class Client {
         File[] listOfFiles = folder.listFiles();
 
         // establish a connection
-        System.out.println("Connecting to the master..");
         socket = new Socket("127.0.0.1", 8080);
         System.out.println("Connected!");
 
         // sends output to the socket
         out = new DataOutputStream(socket.getOutputStream());
 
+        in = new DataInputStream(socket.getInputStream());
+        out = new DataOutputStream(socket.getOutputStream());
+
+        // send request type
+        out.writeUTF("register");
         // send client id
         out.writeUTF("0");
 
@@ -58,15 +72,53 @@ public class Client {
 
         // send end message
         out.writeUTF("end");
-        System.out.println("Success!");
+
+        System.out.println(in.readUTF());
 
         // close the connection
         out.close();
         socket.close();
     }
 
-    private void download() {
-        // TO-DO
+    private void download() throws UnknownHostException, IOException {
+        System.out.print("File name:");
+        String inp = input.nextLine();
+        System.out.println(inp);
+        if (inp == null || inp == "") {
+            return;
+        }
+
+        // establish a connection
+        socket = new Socket("127.0.0.1", 8080);
+        System.out.println("Connected!");
+
+        // sends output to the socket
+        out = new DataOutputStream(socket.getOutputStream());
+
+        // send request type
+        out.writeUTF("search");
+
+        // send fileName
+        out.writeUTF(inp);
+        // takes input from the client socket
+        in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+
+        ArrayList<String> peers = new ArrayList<>();
+        String msg = in.readUTF();
+        // reads peers from client until "end" is sent
+        while (!msg.equals("end")) {
+            msg = in.readUTF();
+            peers.add(msg);
+            System.out.println(msg);
+        }
+
+        if (peers.isEmpty()) {
+            System.out.println("Your requested file was not found!");
+            return;
+        }
+        System.out.println("Found!");
+
+        // TO-DO connect to peer to download
     }
 
     public static void main(String args[]) {
