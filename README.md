@@ -5,7 +5,7 @@
 **Team Name**: NBV  
 **Students**: 
 * Batkhishig Dulamsurankhor (bdulamsurankhor@hawk.iit.edu)   
-* Nithin Singh (nsingh33@hawk.iit.edu)  
+* Nitin Singh (nsingh33@hawk.iit.edu)  
 * Vaishnavi Papudesi Babu (vpapudesibabu@hawk.iit.edu)   
 
 **Building**
