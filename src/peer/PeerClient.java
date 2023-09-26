@@ -16,6 +16,8 @@ public class PeerClient extends Thread {
     private DataOutputStream out = null;
     private DataInputStream in = null;
     private Scanner input = null;
+    ArrayList<String> peers = new ArrayList<>();
+    String fileToObtain = "";
 
     @Override
     public void run() {
@@ -117,68 +119,50 @@ public class PeerClient extends Thread {
         // send fileName
         out.writeUTF(fileName);
 
-        ArrayList<String> peers = new ArrayList<>();
         String msg = in.readUTF();
         // reads peers from cis until "end" is sent
-        int idx = 0;
+
+        this.fileToObtain = fileName;
+        this.peers.clear();
         while (!msg.equals("end")) {
-            peers.add(msg);
-            System.out.println(String.format("[Client]: [%d]: %s", idx, msg));
-            String[] splited = msg.split("\\s+");
+            System.out.println(String.format("[Client]: %s", msg));
+            this.peers.add(msg);
             msg = in.readUTF();
         }
     }
 
     private void obtain() throws UnknownHostException, IOException {
-        System.out.print("[Client]: File name:");
-        String fileName = input.nextLine();
-        if (fileName == null || fileName == "") {
+
+        if (this.fileToObtain == "") {
+            System.out.println("[Client]: Please search a file first!");
             return;
         }
-
-        // establish a connection
-        socket = new Socket("127.0.0.1", 8080);
-        System.out.println("[Client]: Connected!");
-
-        DataInputStream in = new DataInputStream(socket.getInputStream());
-        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-
-        // send request type
-        out.writeUTF("search");
-
-        // send fileName
-        out.writeUTF(fileName);
-
-        ArrayList<String> peers = new ArrayList<>();
-        String msg = in.readUTF();
-        // reads peers from client until "end" is sent
+        if (peers.size() == 0) {
+            System.out.println("[Client]: Your requested file is not found!");
+            return;
+        }
         int idx = 0;
-        while (!msg.equals("end")) {
-            peers.add(msg);
-            System.out.println(String.format("[Client]: [%d]: %s", idx, msg));
-            msg = in.readUTF();
+        for (String peer : this.peers) {
+            System.out.println(String.format("[Client]: [%d]: %s", idx, peer));
+            idx += 1;
         }
-
-        if (peers.isEmpty()) {
-            System.out.println("[Client]: Your requested file was not found!");
-            return;
-        }
-        System.out.print("[Client]: Which server do you want to download the file from: ");
-        String server = input.nextLine();
+        System.out.print("[Client]: Choose a server from above: ");
+        String serverIdx = input.nextLine();
 
         // establish a connection
-        socket = new Socket("127.0.0.1", 6000);
+        String[] splited = peers.get(Integer.parseInt(serverIdx)).split("\\s+");
+        socket = new Socket(splited[1], 6000);
         System.out.println("[Client]: Connected!");
 
         in = new DataInputStream(socket.getInputStream());
         out = new DataOutputStream(socket.getOutputStream());
 
         // send fileName
-        out.writeUTF(fileName);
+        out.writeUTF(fileToObtain);
 
         int bytesRead;
         byte[] buffer = new byte[1024];
-        try (FileOutputStream fos = new FileOutputStream(String.format("./%s", fileName))) {
+        try (FileOutputStream fos = new FileOutputStream(String.format("./%s", fileToObtain))) {
             while ((bytesRead = in.read(buffer)) > 0) {
                 fos.write(buffer, 0, bytesRead);
             }
