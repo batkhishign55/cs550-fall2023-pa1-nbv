@@ -30,3 +30,6 @@ Start central indexing server app.
 ```console
 java src.cis.CisMain
 ``` 
+
+To run files-generator.py, 
+Execute `python files-generator.py <peerID>`, eg. `python files-generater.py peer1`
