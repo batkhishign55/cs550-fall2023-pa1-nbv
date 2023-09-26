@@ -2,9 +2,12 @@ package src.peer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class PeerServer extends Thread {
 
@@ -29,7 +32,15 @@ public class PeerServer extends Thread {
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
                 String fileName = in.readUTF();
-                out.writeUTF("found");
+                System.out.println(String.format("[Server]: Requested file name: %s", fileName));
+
+                byte[] bytes = Files.readAllBytes(Paths.get("./files/", fileName));
+                System.out.println(bytes.toString());
+
+                out.flush();
+                out.write(bytes);
+
+                socket.close();
 
             } catch (IOException i) {
                 System.out.println(i);
