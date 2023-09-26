@@ -3,6 +3,7 @@ package src.peer;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -54,7 +55,7 @@ public class PeerClient extends Thread {
         File[] listOfFiles = folder.listFiles();
 
         // establish a connection
-        socket = new Socket("127.0.0.1", 8080);
+        socket = new Socket("192.168.64.2", 8080);
         System.out.println("[Client]: Connected!");
 
         // sends output to the socket
@@ -85,13 +86,13 @@ public class PeerClient extends Thread {
 
     private void download() throws UnknownHostException, IOException {
         System.out.print("[Client]: File name:");
-        String inp = input.nextLine();
-        if (inp == null || inp == "") {
+        String fileName = input.nextLine();
+        if (fileName == null || fileName == "") {
             return;
         }
 
         // establish a connection
-        socket = new Socket("127.0.0.1", 8080);
+        socket = new Socket("192.168.64.2", 8080);
         System.out.println("[Client]: Connected!");
 
         DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -101,7 +102,7 @@ public class PeerClient extends Thread {
         out.writeUTF("search");
 
         // send fileName
-        out.writeUTF(inp);
+        out.writeUTF(fileName);
 
         ArrayList<String> peers = new ArrayList<>();
         String msg = in.readUTF();
@@ -118,7 +119,7 @@ public class PeerClient extends Thread {
             return;
         }
         System.out.print("[Client]: Which server do you want to download the file from: ");
-        inp = input.nextLine();
+        String server = input.nextLine();
 
         // establish a connection
         socket = new Socket("127.0.0.1", 6000);
@@ -128,8 +129,14 @@ public class PeerClient extends Thread {
         out = new DataOutputStream(socket.getOutputStream());
 
         // send fileName
-        out.writeUTF(inp);
-        msg = in.readUTF();
+        out.writeUTF(fileName);
 
+        int bytesRead;
+        byte[] buffer = new byte[1024];
+        try (FileOutputStream fos = new FileOutputStream(String.format("./%s", fileName))) {
+            while ((bytesRead = in.read(buffer)) > 0) {
+                fos.write(buffer, 0, bytesRead);
+            }
+        }
     }
 }
