@@ -5,7 +5,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.io.*;
 
-public class Server {
+public class CisMain {
 	// initialize socket and input stream
 	private ServerSocket server = null;
 	ArrayList<PeerClientEntity> peers = new ArrayList<>();
@@ -24,7 +24,7 @@ public class Server {
 	}
 
 	// constructor with port
-	public Server(int port) {
+	public CisMain(int port) {
 
 		try {
 			server = new ServerSocket(port);
@@ -36,7 +36,6 @@ public class Server {
 		// starts server and waits for a connection
 		while (true) {
 			try {
-
 				System.out.println("Waiting for a client ...");
 				Socket socket = server.accept();
 				System.out.println("Client accepted");
@@ -55,6 +54,6 @@ public class Server {
 	}
 
 	public static void main(String args[]) {
-		new Server(8080);
+		new CisMain(8080);
 	}
 }

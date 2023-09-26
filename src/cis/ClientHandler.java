@@ -11,14 +11,14 @@ public class ClientHandler extends Thread {
     private DataInputStream in = null;
     private DataOutputStream out = null;
     private Socket socket;
-    private Server server;
+    private CisMain cis;
 
     // Constructor
-    public ClientHandler(Server server, Socket socket, DataInputStream in, DataOutputStream out) {
+    public ClientHandler(CisMain cis, Socket socket, DataInputStream in, DataOutputStream out) {
         this.socket = socket;
         this.in = in;
         this.out = out;
-        this.server = server;
+        this.cis = cis;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ClientHandler extends Thread {
         String id = in.readUTF();
 
         PeerClientEntity peer = null;
-        ArrayList<PeerClientEntity> peers = server.getPeers();
+        ArrayList<PeerClientEntity> peers = cis.getPeers();
         // check if peer is already saved
         for (PeerClientEntity savedPeer : peers) {
             if (savedPeer.getPeerId().equals(id)) {
@@ -117,7 +117,7 @@ public class ClientHandler extends Thread {
         // read file to search
         String target = in.readUTF();
 
-        ArrayList<PeerClientEntity> peers = server.getPeers();
+        ArrayList<PeerClientEntity> peers = cis.getPeers();
 
         // search for the file in each peers
         for (PeerClientEntity savedPeer : peers) {

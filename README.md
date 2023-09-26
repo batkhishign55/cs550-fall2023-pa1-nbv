@@ -24,9 +24,9 @@ Create folder named files. Add some files to share there.
 
 Start peer client app.
 ```console
-java src.peer.Client
+java src.peer.PeerMain
 ``` 
 Start central indexing server app.
 ```console
-java src.cis.Server
+java src.cis.CisMain
 ``` 

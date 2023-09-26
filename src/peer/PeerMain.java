@@ -6,14 +6,14 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Client {
+public class PeerMain {
     // initialize socket and input output streams
     private Socket socket = null;
     private Scanner input = null;
     private DataOutputStream out = null;
     private DataInputStream in = null;
 
-    public Client() {
+    public PeerMain() {
         System.out.println("Client started");
         input = new Scanner(System.in);
         while (true) {
@@ -83,7 +83,6 @@ public class Client {
     private void download() throws UnknownHostException, IOException {
         System.out.print("File name:");
         String inp = input.nextLine();
-        System.out.println(inp);
         if (inp == null || inp == "") {
             return;
         }
@@ -106,22 +105,24 @@ public class Client {
         ArrayList<String> peers = new ArrayList<>();
         String msg = in.readUTF();
         // reads peers from client until "end" is sent
+        int idx = 0;
         while (!msg.equals("end")) {
-            msg = in.readUTF();
             peers.add(msg);
-            System.out.println(msg);
+            System.out.println(String.format("[%d]: %s", idx, msg));
+            msg = in.readUTF();
         }
 
         if (peers.isEmpty()) {
             System.out.println("Your requested file was not found!");
             return;
         }
-        System.out.println("Found!");
+        System.out.print("Which server do you want to download the file from: ");
+        inp = input.nextLine();
 
         // TO-DO connect to peer to download
     }
 
     public static void main(String args[]) {
-        new Client();
+        new PeerMain();
     }
 }
