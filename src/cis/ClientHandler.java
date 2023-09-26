@@ -123,7 +123,7 @@ public class ClientHandler extends Thread {
         for (PeerClientEntity savedPeer : peers) {
             for (String fileName : savedPeer.getFileNames()) {
                 if (fileName.equals(target)) {
-                    out.writeUTF(savedPeer.getPeerId());
+                    out.writeUTF(String.format("%s %s", savedPeer.getPeerId(), savedPeer.getHostname()));
                 }
             }
         }

@@ -22,7 +22,8 @@ public class PeerClient extends Thread {
 
         input = new Scanner(System.in);
         while (true) {
-            System.out.println("[Client]: What do you want to do?\n\t[0] - Register\n\t[1] - Download a file");
+            System.out.println(
+                    "[Client]: What do you want to do?\n\t[0] - Register\n\t[1] - Search a file\n\t[2] - Obtain a file");
             String inp = input.nextLine();
             switch (inp) {
                 case "0":
@@ -35,7 +36,15 @@ public class PeerClient extends Thread {
                     break;
                 case "1":
                     try {
-                        download();
+                        search();
+                    } catch (IOException e) {
+                        System.out.println("[Client]: Encountered an error while downloading!");
+                        e.printStackTrace();
+                    }
+                    break;
+                case "2":
+                    try {
+                        obtain();
                     } catch (IOException e) {
                         System.out.println("[Client]: Encountered an error while downloading!");
                         e.printStackTrace();
@@ -55,7 +64,7 @@ public class PeerClient extends Thread {
         File[] listOfFiles = folder.listFiles();
 
         // establish a connection
-        socket = new Socket("192.168.64.2", 8080);
+        socket = new Socket("127.0.0.1", 8080);
         System.out.println("[Client]: Connected!");
 
         // sends output to the socket
@@ -84,7 +93,7 @@ public class PeerClient extends Thread {
         socket.close();
     }
 
-    private void download() throws UnknownHostException, IOException {
+    private void search() throws UnknownHostException, IOException {
         System.out.print("[Client]: File name:");
         String fileName = input.nextLine();
         if (fileName == null || fileName == "") {
@@ -92,7 +101,38 @@ public class PeerClient extends Thread {
         }
 
         // establish a connection
-        socket = new Socket("192.168.64.2", 8080);
+        socket = new Socket("127.0.0.1", 8080);
+        System.out.println("[Client]: Connected!");
+
+        DataInputStream in = new DataInputStream(socket.getInputStream());
+        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+
+        // send request type
+        out.writeUTF("search");
+
+        // send fileName
+        out.writeUTF(fileName);
+
+        ArrayList<String> peers = new ArrayList<>();
+        String msg = in.readUTF();
+        // reads peers from client until "end" is sent
+        int idx = 0;
+        while (!msg.equals("end")) {
+            peers.add(msg);
+            System.out.println(String.format("[Client]: [%d]: %s", idx, msg));
+            msg = in.readUTF();
+        }
+    }
+
+    private void obtain() throws UnknownHostException, IOException {
+        System.out.print("[Client]: File name:");
+        String fileName = input.nextLine();
+        if (fileName == null || fileName == "") {
+            return;
+        }
+
+        // establish a connection
+        socket = new Socket("127.0.0.1", 8080);
         System.out.println("[Client]: Connected!");
 
         DataInputStream in = new DataInputStream(socket.getInputStream());
