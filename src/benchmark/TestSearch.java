@@ -73,7 +73,7 @@ public class TestSearch {
 
             // calculating the time in milliseconds
             long elapsedTimeMillis = (endTime - startTime) / 1000000; 
-            arrayList.add(i);
+            TimeList.add(i);
         }
         // record end time
          long endTime = System.nanoTime();
@@ -82,7 +82,7 @@ public class TestSearch {
          long elapsedTimeMillis = (endTime - startTime) / 1000000; 
 
          System.out.println("Total Time Taken: " + elapsedTimeMillis + "ms");
-         System.out.println("Time Taken Per Request: " + arrayList);
+         System.out.println("Time Taken Per Request: " + TimeList);
          
    
     }
