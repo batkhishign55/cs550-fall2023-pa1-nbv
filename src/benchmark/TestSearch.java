@@ -76,7 +76,7 @@ public class TestSearch {
 
             // calculating the time in milliseconds
             long elapsedTimeMillis = (endTime - startTime1) / 1000000; 
-            TimeList.add(i);
+            TimeList.add(elapsedTimeMillis);
         }
         // record end time
          long endTime = System.nanoTime();
