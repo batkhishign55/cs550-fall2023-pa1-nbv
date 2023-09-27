@@ -62,9 +62,13 @@ public class PeerClient extends Thread {
                 e.printStackTrace();
             } finally {
                 try {
-                    in.close();
-                    out.close();
                     socket.close();
+                    if (in != null) {
+                        in.close();
+                    }
+                    if (out != null) {
+                        out.close();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -39,8 +39,12 @@ public class PeerServer extends Thread {
                 out.write(bytes);
 
                 socket.close();
-                in.close();
-                out.close();
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
 
             } catch (IOException i) {
                 System.out.println(i);
