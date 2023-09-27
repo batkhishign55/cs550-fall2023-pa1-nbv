@@ -29,37 +29,46 @@ public class PeerClient extends Thread {
 
         input = new Scanner(System.in);
         while (true) {
-            System.out.println(
-                    "[Client]: What do you want to do?\n\t[0] - Register\n\t[1] - Search a file\n\t[2] - Obtain a file");
-            String inp = input.nextLine();
-            switch (inp) {
-                case "0":
-                    try {
+            try {
+                System.out.println(
+                        "[Client]: What do you want to do?\n\t[0] - Register\n\t[1] - Search a file\n\t[2] - Obtain a file");
+                String inp = input.nextLine();
+                switch (inp) {
+                    case "0":
                         register();
-                    } catch (IOException e) {
-                        System.out.println("[Client]: Encountered an error while registering!");
-                        e.printStackTrace();
-                    }
-                    break;
-                case "1":
-                    try {
-                        search();
-                    } catch (IOException e) {
-                        System.out.println("[Client]: Encountered an error while searching!");
-                        e.printStackTrace();
-                    }
-                    break;
-                case "2":
-                    try {
-                        obtain();
-                    } catch (IOException e) {
-                        System.out.println("[Client]: Encountered an error while obtaining!");
-                        e.printStackTrace();
-                    }
-                    break;
-                default:
-                    System.out.println("[Client]: Unknown option!");
-                    break;
+                        break;
+                    case "1":
+                        try {
+                            search();
+                        } catch (IOException e) {
+                            System.out.println("[Client]: Encountered an error while searching!");
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "2":
+                        try {
+                            obtain();
+                        } catch (IOException e) {
+                            System.out.println("[Client]: Encountered an error while obtaining!");
+                            e.printStackTrace();
+                        }
+                        break;
+                    default:
+                        System.out.println("[Client]: Unknown option!");
+                        break;
+                }
+            } catch (IOException e) {
+                System.out.println("[Client]: Encountered an error while registering!");
+                e.printStackTrace();
+            } finally {
+                try {
+                    in.close();
+                    out.close();
+                    socket.close();
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -94,14 +103,9 @@ public class PeerClient extends Thread {
             out.writeUTF(file.getName());
         }
 
+        System.out.println("[Client]: " + in.readUTF());
         // send end message
         out.writeUTF("end");
-
-        System.out.println("[Client]: " + in.readUTF());
-
-        // close the connection
-        out.close();
-        socket.close();
     }
 
     private void search() throws UnknownHostException, IOException {

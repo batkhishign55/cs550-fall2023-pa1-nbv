@@ -43,16 +43,16 @@ public class ClientHandler extends Thread {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } finally {
+            try {
+                // closing resources
+                this.in.close();
+                this.out.close();
+                this.socket.close();
 
-        try {
-            // closing resources
-            this.in.close();
-            this.out.close();
-            this.socket.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -127,6 +127,5 @@ public class ClientHandler extends Thread {
                 }
             }
         }
-        out.writeUTF("end");
     }
 }

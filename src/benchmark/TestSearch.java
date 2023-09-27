@@ -28,10 +28,13 @@ public class TestSearch {
     public static void main(String args[]) {
         // establish a connection
         for (int i = 0; i < 1000; i++) {
+            Socket socket = null;
+            DataOutputStream out = null;
+            DataInputStream in = null;
             try {
-                Socket socket = new Socket("127.0.0.1", 8080);
-                DataInputStream in = new DataInputStream(socket.getInputStream());
-                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                socket = new Socket("127.0.0.1", 8080);
+                in = new DataInputStream(socket.getInputStream());
+                out = new DataOutputStream(socket.getOutputStream());
 
                 // send request type
                 out.writeUTF("search");
@@ -46,8 +49,15 @@ public class TestSearch {
                 }
 
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
+            } finally {
+                try {
+                    in.close();
+                    out.close();
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
