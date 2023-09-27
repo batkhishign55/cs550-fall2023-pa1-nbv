@@ -28,7 +28,7 @@ public class TestSearch {
     public static void main(String args[]) {
         // record start time    
         long startTime = System.nanoTime();
-        
+        List<Integer> TimeList = new ArrayList<>();
         
         // establish a connection
 
@@ -36,6 +36,7 @@ public class TestSearch {
             Socket socket = null;
             DataOutputStream out = null;
             DataInputStream in = null;
+
             try {
 
                 socket = new Socket("127.0.0.1", 8080);
@@ -65,6 +66,12 @@ public class TestSearch {
                     e.printStackTrace();
                 }
             }
+            // record end time
+            long endTime = System.nanoTime();
+
+            // calculating the time in milliseconds
+            long elapsedTimeMillis = (endTime - startTime) / 1000000; 
+            arrayList.add(i);
         }
         // record end time
          long endTime = System.nanoTime();
@@ -72,7 +79,9 @@ public class TestSearch {
          // calculating the time in milliseconds
          long elapsedTimeMillis = (endTime - startTime) / 1000000; 
 
-         System.out.println("Time Taken: " + elapsedTimeMillis + "ms");
+         System.out.println("Total Time Taken: " + elapsedTimeMillis + "ms");
+         System.out.println("Time Taken Per Request: " + arrayList);
+         
    
     }
 }
