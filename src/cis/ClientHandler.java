@@ -127,5 +127,8 @@ public class ClientHandler extends Thread {
                 }
             }
         }
+
+        //send end message
+        out.writeUTF("end");
     }
 }

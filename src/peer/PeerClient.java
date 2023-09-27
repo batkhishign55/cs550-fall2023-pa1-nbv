@@ -65,7 +65,6 @@ public class PeerClient extends Thread {
                     in.close();
                     out.close();
                     socket.close();
-                    input.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -76,7 +75,7 @@ public class PeerClient extends Thread {
     private void register() throws IOException {
 
         // get all file names to register
-        File folder = new File("./files");
+        File folder = new File("./files2");
         File[] listOfFiles = folder.listFiles();
 
         // establish a connection
@@ -102,10 +101,10 @@ public class PeerClient extends Thread {
         for (File file : listOfFiles) {
             out.writeUTF(file.getName());
         }
-
-        System.out.println("[Client]: " + in.readUTF());
         // send end message
         out.writeUTF("end");
+
+        System.out.println("[Client]: " + in.readUTF());
     }
 
     private void search() throws UnknownHostException, IOException {
