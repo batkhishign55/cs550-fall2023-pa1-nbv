@@ -30,7 +30,7 @@ public class TestSearch {
     public static void main(String args[]) {
         // record start time    
         long startTime = System.nanoTime();
-        List<Integer> TimeList = new ArrayList<>();
+        List<Long> TimeList = new ArrayList<>();
         
         // establish a connection
 
