@@ -35,6 +35,9 @@ public class TestSearch {
         // establish a connection
 
         for (int i = 0; i < 1000; i++) {
+            // record start time    
+            long startTime1 = System.nanoTime();
+
             Socket socket = null;
             DataOutputStream out = null;
             DataInputStream in = null;
@@ -72,7 +75,7 @@ public class TestSearch {
             long endTime = System.nanoTime();
 
             // calculating the time in milliseconds
-            long elapsedTimeMillis = (endTime - startTime) / 1000000; 
+            long elapsedTimeMillis = (endTime - startTime1) / 1000000; 
             TimeList.add(i);
         }
         // record end time
