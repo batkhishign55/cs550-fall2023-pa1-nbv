@@ -42,4 +42,5 @@ java src.cis.CisMain
 To run files-generator.py, 
 Execute `python files-generator.py <peerID>`, eg. `python files-generater.py peer1`
 
-
+**Weak Scaling Scalability Study**
+<img width="934" alt="Screenshot 2023-09-26 at 9 07 14 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/5f73f2e5-a5d1-49ef-944b-ddfcf3f16d75">
