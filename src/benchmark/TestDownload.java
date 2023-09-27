@@ -11,9 +11,9 @@ import java.util.Random;
 
 public class TestDownload {
 
-    private static final String[] peers = { "peer1", "peer2" };
-    private static final String[] sizes = { "1KB", "1MB", "1GB" };
-    private static final int[] sizeLimits = { 5, 5, 1 };
+    private static final String[] peers = { "peer2" };
+    private static final String[] sizes = { "1KB" };
+    private static final int[] sizeLimits = { 100, 5, 1 };
     private static final Random random = new Random();
 
     public static String getRandomFilename() {
@@ -49,7 +49,9 @@ public class TestDownload {
                 out.writeUTF("search");
 
                 // send fileName
-                out.writeUTF(getRandomFilename());
+                String fileName = getRandomFilename();
+                System.out.println(fileName);
+                out.writeUTF(fileName);
                 String peer_addr = in.readUTF();
                 String msg = "";
 
@@ -66,8 +68,7 @@ public class TestDownload {
                 }
                 socket.close();
 
-                String fileName = getRandomFilename();
-                socket = new Socket(peer_addr.split("\\s+")[0], 6000);
+                socket = new Socket(peer_addr.split("\\s+")[1], 6000);
 
                 in = new DataInputStream(socket.getInputStream());
                 out = new DataOutputStream(socket.getOutputStream());
