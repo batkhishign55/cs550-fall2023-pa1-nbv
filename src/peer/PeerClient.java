@@ -75,7 +75,7 @@ public class PeerClient extends Thread {
     private void register() throws IOException {
 
         // get all file names to register
-        File folder = new File("./files2");
+        File folder = new File("./files");
         File[] listOfFiles = folder.listFiles();
 
         // establish a connection
