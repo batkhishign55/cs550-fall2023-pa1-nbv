@@ -206,7 +206,7 @@ public class PeerClient extends Thread {
 
         int bytesRead;
         byte[] buffer = new byte[1024];
-        try (FileOutputStream fos = new FileOutputStream(String.format("./%s", fileToObtain))) {
+        try (FileOutputStream fos = new FileOutputStream(String.format("./files/%s", fileToObtain))) {
             while ((bytesRead = in.read(buffer)) > 0) {
                 fos.write(buffer, 0, bytesRead);
             }
