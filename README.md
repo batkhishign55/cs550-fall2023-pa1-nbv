@@ -2,8 +2,44 @@
 ### CS550 Advanced Operating Systems Programming Assignment 1 Repo
 **Illinois Institute of Technology**  
 
-**Team Name**: please-write-team-name  
-**Students**:  
-* please-write-student1-name (please-write-email-address)  
-* please-write-student2-name (please-write-email-address) or remove  
-* please-write-student3-name (please-write-email-address) or remove  
+**Team Name**: NBV  
+**Students**: 
+* Batkhishig Dulamsurankhor (bdulamsurankhor@hawk.iit.edu)   
+* Nitin Singh (nsingh33@hawk.iit.edu)  
+* Vaishnavi Papudesi Babu (vpapudesibabu@hawk.iit.edu)   
+
+**Building**
+
+Run ant command, it will generate source files in bin folder.
+```console
+ant
+``` 
+**Running**
+
+Go to bin folder.
+```console
+cd bin
+``` 
+Create folder named files. Add some files to share there.
+
+Start peer client app.
+```console
+java src.peer.PeerMain
+``` 
+Start central indexing server app.
+```console
+java src.cis.CisMain
+``` 
+
+<img width="1136" alt="Screenshot 2023-09-26 at 3 49 51 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/fcdf2283-748d-4ebe-a4d2-796b64e738be">
+
+
+**Registration:**
+<img width="1139" alt="Screenshot 2023-09-26 at 4 55 04 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/bcd1411d-8493-4ae6-99ef-6b8093c976a8">
+
+
+
+To run files-generator.py, 
+Execute `python files-generator.py <peerID>`, eg. `python files-generater.py peer1`
+
+
