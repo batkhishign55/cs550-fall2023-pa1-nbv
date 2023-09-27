@@ -8,7 +8,7 @@ print(os.getcwd())
 
 peer = sys.argv[1]
 
-filesDirectory = os.getcwd()+"/bin/datasets/"
+filesDirectory = os.getcwd()+"/bin/"+peer+"/"
 
 if not os.path.exists(filesDirectory):
     os.makedirs(filesDirectory)
