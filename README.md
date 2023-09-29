@@ -35,15 +35,14 @@ java src.cis.CisMain
 
 
 **Registration:**
-<img width="1139" alt="Screenshot 2023-09-26 at 4 55 04 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/bcd1411d-8493-4ae6-99ef-6b8093c976a8">
-
+<img width="1138" alt="Screenshot 2023-09-26 at 4 44 31 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/daace1d4-3ce4-4fa7-9d3f-87c8254d45e0">
 
 
 To run files-generator.py, 
 Execute `python files-generator.py <peerID>`, eg. `python files-generater.py peer1`
 
 **Weak Scaling Scalability Study**
-<img width="934" alt="Screenshot 2023-09-26 at 9 07 14 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/5f73f2e5-a5d1-49ef-944b-ddfcf3f16d75">
+![image](https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/0a4412e0-9b5a-48b1-b1a6-8db3bd58539d)
 
 **Strong Scaling Scalability Study**
-<img width="981" alt="Screenshot 2023-09-26 at 11 55 59 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/955495e2-3f86-438e-86b7-7f0b4979e149">
+<img width="970" alt="Screenshot 2023-09-28 at 10 50 26 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/29f87772-37f8-4152-8921-3dc1903de605">

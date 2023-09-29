@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 nodes = [1, 2]
 
 # Average search times for each requests per peer (time per request)
-average_times = [2, 4]
+average_times = [5.0757, 11.7175]
 
 # Standard deviations
-std_devs = [1, 2]
+std_devs = [1.178, 2.198]
 
 
 # average search times
