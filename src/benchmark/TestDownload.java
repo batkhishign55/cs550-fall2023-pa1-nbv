@@ -11,9 +11,9 @@ import java.util.Random;
 
 public class TestDownload {
 
-    private static final String[] peers = { "peer2" };
-    private static final String[] sizes = { "1KB" };
-    private static final int[] sizeLimits = { 100, 5, 1 };
+    private static final String[] peers = { "peer1", "peer2" };
+    private static final String[] sizes = { "1KB", "1MB", "1GB" };
+    private static final int[] sizeLimits = { 10000, 1000, 10 };
     private static final Random random = new Random();
 
     public static String getRandomFilename() {
@@ -32,7 +32,7 @@ public class TestDownload {
 
         // establish a connection
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 16000; i++) {
             // record start time
             long startTime1 = System.nanoTime();
 

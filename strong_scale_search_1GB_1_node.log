@@ -1,0 +1,27 @@
+Picked up _JAVA_OPTIONS: -Xmx2g
+1GB_000000_peer1.bin
+
+Time Taken: 10144ms
+1GB_000003_peer1.bin
+
+Time Taken: 18553ms
+1GB_000001_peer1.bin
+
+Time Taken: 27232ms
+1GB_000004_peer1.bin
+
+Time Taken: 36135ms
+1GB_000002_peer1.bin
+
+Time Taken: 44143ms
+1GB_000002_peer1.bin
+
+Time Taken: 53674ms
+1GB_000003_peer1.bin
+
+Time Taken: 62765ms
+1GB_000004_peer1.bin
+
+Time Taken: 71248ms
+Total Time Taken: 71250ms
+Time Taken Per Request: [10159, 8394, 8679, 8903, 8006, 9534, 9087, 8483]
