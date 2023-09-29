@@ -35,8 +35,7 @@ java src.cis.CisMain
 
 
 **Registration:**
-<img width="1139" alt="Screenshot 2023-09-26 at 4 55 04 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/bcd1411d-8493-4ae6-99ef-6b8093c976a8">
-
+<img width="970" alt="Screenshot 2023-09-28 at 10 50 26 PM" src="https://github.com/datasys-classrooms/cs550-fall2023-pa1-nbv/assets/145067050/1f913ded-b053-4860-9dd6-cee5a25ae649">
 
 
 To run files-generator.py, 
