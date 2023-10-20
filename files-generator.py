@@ -8,7 +8,7 @@ print(os.getcwd())
 
 peer = sys.argv[1]
 
-filesDirectory = os.getcwd()+"/bin/"+peer+"/"
+filesDirectory = os.getcwd()+"/bin/files/"
 
 if not os.path.exists(filesDirectory):
     os.makedirs(filesDirectory)
@@ -23,7 +23,6 @@ def generate_files(bytetype, size_in_bytes, files_count, file_type):
             content = bytes(os.urandom(size_in_bytes))
             file.write(content)
 
-generate_files("1KB_", 1024, 1000000, "text")
-generate_files("1MB_", 1024*1024, 10000, "text")
-generate_files("1GB_", 1024*1024*1024, 10, "binary")
+generate_files("10KB_", 10*1024, 1000000, "text")
+# generate_files("100MB_", 100*1024*1024, 10, "text")
 
