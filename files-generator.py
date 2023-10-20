@@ -23,6 +23,6 @@ def generate_files(bytetype, size_in_bytes, files_count, file_type):
             content = bytes(os.urandom(size_in_bytes))
             file.write(content)
 
-generate_files("10KB_", 10*1024, 1000000, "text")
+generate_files("10KB_", 10*1024, 100000, "text")
 # generate_files("100MB_", 100*1024*1024, 10, "text")
 
