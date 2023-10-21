@@ -1,29 +1,16 @@
 import matplotlib.pyplot as plt
 
-# The number of nodes we have (VMs)
-nodes = [1, 2]
+# data for comparison
+topologies = ['Centralized', 'Decentralized']
+mean_latency = [4.2, 3.8]  # Means
+std_deviation_latency = [0.6, 0.4]  # Standard deviation
 
-# Average search times for each requests per peer (time per request)
-average_times = [5.0757, 11.7175]
+# data plot
+fig, ax = plt.subplots()
+ax.bar(topologies, mean_latency, yerr=std_deviation_latency, align='center', alpha=0.5, ecolor='black', capsize=10)
+ax.set_ylabel('Latency')
+ax.set_title('Comparison of Data Transfer Performance')
+ax.yaxis.grid(True)
 
-# Standard deviations
-std_devs = [1.178, 2.198]
-
-
-# average search times
-plt.figure(figsize=(10, 5))
-plt.subplot(1, 2, 1)
-plt.plot(nodes, average_times, marker='o')
-plt.title('Average Search Time vs. Nodes')
-plt.xlabel('Number of Nodes')
-plt.ylabel('Average Search Time (seconds)')
-
-# standard deviations of search time
-plt.subplot(1, 2, 2)
-plt.plot(nodes, std_devs, marker='o')
-plt.title('Standard Deviation of Search Time vs. Nodes')
-plt.xlabel('Nodes')
-plt.ylabel('Standard Deviation')
-
-plt.tight_layout()
+# Displaying the graph
 plt.show()
